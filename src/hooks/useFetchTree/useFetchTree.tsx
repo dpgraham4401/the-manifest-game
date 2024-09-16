@@ -64,9 +64,9 @@ const parseConfig = (config: ConfigFile): PositionUnawareDecisionTree => {
 };
 
 /**
- * This hook is used to fetch the config from the server.
+ * This hook is used to fetch the decision tree from the server.
  */
-export const useFetchConfig = (configPath: string) => {
+export const useFetchTree = (configPath: string) => {
   const [config, setConfig] = useState<PositionUnawareDecisionTree>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<UseFetchConfigError | undefined>();
@@ -82,7 +82,7 @@ export const useFetchConfig = (configPath: string) => {
           const config = parseConfig(data);
           setConfig(config);
         } catch {
-          setError({ message: 'Error Parsing Config' });
+          setError({ message: 'Error Parsing Tree' });
         }
       })
       .catch((error) => {

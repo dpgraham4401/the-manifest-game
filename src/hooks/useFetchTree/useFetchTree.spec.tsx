@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { useFetchConfig } from 'hooks/useFetchConfig/useFetchConfig';
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest';
+import { useFetchTree } from './useFetchTree';
 
 const handlers = [
   http.get('/default.json', () => {
@@ -27,7 +27,7 @@ beforeAll(() => server.listen());
 afterAll(() => server.close());
 
 const TestComponent = () => {
-  const { config, error, isLoading } = useFetchConfig('/default.json');
+  const { config, error, isLoading } = useFetchTree('/default.json');
   return (
     <>
       {isLoading && <p>loading...</p>}
@@ -53,7 +53,7 @@ const TestComponent = () => {
   );
 };
 
-describe('useFetchConfig', () => {
+describe('useFetchTree', () => {
   test('initially isLoading, error, and data are undefined', () => {
     render(<TestComponent />);
     expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
