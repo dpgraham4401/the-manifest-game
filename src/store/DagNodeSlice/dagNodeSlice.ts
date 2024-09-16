@@ -19,7 +19,9 @@ export interface TreeNode extends Omit<Node, 'position'> {
  */
 export type DecisionTree = Record<string, TreeNode>;
 
-export type PositionUnawareDecisionTree = Record<string, Omit<TreeNode, 'position'>>;
+export type PositionUnawareTreeNode = Omit<TreeNode, 'position'>;
+
+export type PositionUnawareDecisionTree = Record<string, PositionUnawareTreeNode>;
 
 /**A wrapper for the ReactFlow Node */
 export type DagNode = Node;
