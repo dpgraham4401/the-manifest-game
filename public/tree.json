@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    {
+      "id": "root",
+      "type": "BoolNode",
+      "data": {
+        "label": "foo",
+        "yesId": "doYouHaveSiteId",
+        "noId": "goRegister",
+        "help": "register.html"
+      }
+    },
+    {
+      "id": "goRegister",
+      "data": {
+        "label": "bar",
+        "children": [],
+        "help": "register.html"
+      }
+    },
+    {
+      "id": "goYouHaveSiteId",
+      "data": {
+        "label": "asdf",
+        "children": []
+      }
+    }
+  ]
+}

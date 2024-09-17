@@ -31,6 +31,7 @@ export const Header = ({ treeTitle }: HeaderProps) => {
     }
   };
 
+  console.log('files', import.meta.env.VITE_TREE_FILES);
   return (
     <Panel position="top-center" className="mx-0 w-full">
       <div className="mx-2 box-border min-w-80 rounded-xl bg-rcraBlue p-2">
