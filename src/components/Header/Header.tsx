@@ -4,7 +4,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { useHelp } from '@/hooks';
@@ -19,6 +25,10 @@ interface HeaderProps {
 }
 
 export const Header = ({ treeTitle }: HeaderProps) => {
+  const options = import.meta.env.VITE_TREE_FILES.split(',');
+  const [treeFile, setTreeFile] = React.useState(
+    options.filter((option) => option.includes('default.json'))[0]
+  );
   const issueUrl = import.meta.env.VITE_ISSUE_URL;
   const { showHelp } = useHelp();
 
@@ -31,7 +41,6 @@ export const Header = ({ treeTitle }: HeaderProps) => {
     }
   };
 
-  console.log('files', import.meta.env.VITE_TREE_FILES);
   return (
     <Panel position="top-center" className="mx-0 w-full">
       <div className="mx-2 box-border min-w-80 rounded-xl bg-rcraBlue p-2">
@@ -68,6 +77,22 @@ export const Header = ({ treeTitle }: HeaderProps) => {
                     </>
                   )}
                 </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Decision Tree</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuLabel>Tree Options</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup value={treeFile} onValueChange={setTreeFile}>
+                        {options.map((option) => (
+                          <DropdownMenuRadioItem key={option} value={option}>
+                            {option}
+                          </DropdownMenuRadioItem>
+                        ))}
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
