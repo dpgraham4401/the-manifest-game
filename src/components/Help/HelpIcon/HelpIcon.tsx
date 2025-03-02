@@ -16,7 +16,7 @@ export const HelpIcon = ({ onClick, size = 30 }: HelpIconProps) => {
       <button
         aria-label="more information"
         onClick={onClick}
-        className="rounded-full border-2 border-transparent bg-transparent focus:outline-none focus:ring focus:ring-white"
+        className="rounded-full border-2 border-transparent bg-transparent focus:outline-hidden focus:ring-3 focus:ring-white"
       >
         <FaQuestionCircle
           size={size}

@@ -1,38 +1,102 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-.react-flow__node {
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-rcra-blue: #337ab7;
+  --color-rcra-green: forestgreen;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  .react-flow__node {
     color: transparent;
     cursor: auto;
     background-color: transparent;
     min-width: 20rem;
     box-shadow: none;
     border: theme('borderWidth.4') solid theme('colors.transparent');
-    border-radius: theme('borderRadius.2xl');
+    border-radius: var(--radius-2xl);
     padding: 0.1rem;
-}
+  }
 
-.react-flow__node:focus {
-    border: theme('borderWidth.4') solid theme('colors.blue.500');
+  .react-flow__node:focus {
+    border: theme('borderWidth.4') solid var(--color-blue-500);
     padding: 0.1rem;
-}
+  }
 
-.react-flow__minimap,
-.react-flow__minimap svg {
-    border-radius: theme('borderRadius.2xl');
-    border: theme('borderWidth.2') solid theme('colors.gray.500');
-}
+  .react-flow__minimap,
+  .react-flow__minimap svg {
+    border-radius: var(--radius-2xl);
+    border: theme('borderWidth.2') solid var(--color-gray-500);
+  }
 
-.react-flow__controls {
+  .react-flow__controls {
     box-shadow: none;
-}
+  }
 
-.react-flow__controls button {
-    border-radius: theme('borderRadius.lg');
+  .react-flow__controls button {
+    border-radius: var(--radius-lg);
     border: 2px solid #333333;
     margin-top: 2px;
-    background: theme('colors.gray.200') !important;
+    background: var(--color-gray-200) !important;
+  }
 }
 
 @layer base {
