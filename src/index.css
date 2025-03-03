@@ -60,7 +60,7 @@
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: #7f7f7f;
+        border-color: var(--color-card-foreground, currentColor);
     }
 }
 
@@ -68,7 +68,7 @@
     .react-flow__node {
         color: transparent;
         cursor: auto;
-        background-color: transparent;
+        background-color: var(--color-rcra-blue);
         min-width: 20rem;
         box-shadow: none;
         border: var(--radius-lg) solid transparent;
@@ -77,14 +77,14 @@
     }
 
     .react-flow__node:focus {
-        border: theme('borderWidth.4') solid var(--color-rcra-blue);
+        border: var(--border) solid var(--color-rcra-blue);
         padding: 0.1rem;
     }
 
     .react-flow__minimap,
     .react-flow__minimap svg {
         border-radius: var(--radius-lg);
-        border: theme('borderWidth.2') solid #7f7f7f;
+        border: var(--radius-lg) solid #7f7f7f;
     }
 
     .react-flow__controls {
