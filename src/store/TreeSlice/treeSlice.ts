@@ -1,4 +1,3 @@
-import { Node } from 'reactflow';
 import { layoutTree } from '@/store/TreeSlice/layout';
 import {
   getAncestorIds,
@@ -6,6 +5,7 @@ import {
   setNodesHidden,
   setNodeVisible,
 } from '@/store/TreeSlice/treeSliceUtils';
+import { Node } from 'reactflow';
 import { StateCreator } from 'zustand';
 
 /** Data needed by all nodes in our tree*/
@@ -83,23 +83,10 @@ export const createTreeSlice: StateCreator<
   tree: {},
   path: [],
   setTreeDirection: (direction: TreeDirection) => {
-    set(
-      {
-        tree: layoutTree(get().tree, direction),
-        direction,
-      },
-      false,
-      'setTreeDirection'
-    );
+    set({ tree: layoutTree(get().tree, direction), direction }, false, 'setTreeDirection');
   },
   setDecisionTree: (tree: PositionUnawareDecisionTree) => {
-    set(
-      {
-        tree: layoutTree(tree),
-      },
-      false,
-      'setNewTree'
-    );
+    set({ tree: layoutTree(tree) }, false, 'setNewTree');
   },
   // ToDO: Remove this and corresponding state
   setVertexVisible: (nodeId: string) => {

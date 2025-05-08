@@ -1,7 +1,7 @@
 import { BoolNodeData } from '@/components/Tree';
-import { useEffect, useState } from 'react';
 import { PositionUnawareDecisionTree, TreeNode } from '@/store';
 import { BooleanVertexData, VertexData } from '@/store/TreeSlice/treeSlice';
+import { useEffect, useState } from 'react';
 
 /** Configuration for an individual node, part of the larger config*/
 export interface NodeConfig {
@@ -31,36 +31,50 @@ interface UseFetchConfigError {
   message: string;
 }
 
-/** Parses the config file (an array of BoolNodeConfig and DefaultNodeConfig types) and returns a DecisionTree */
+const buildTree = (
+  nodes: (DefaultNodeConfig | BooleanNodeConfig)[],
+  k = 0
+): PositionUnawareDecisionTree => {
+  if (k >= nodes.length) return {};
+
+  const node = nodes[k];
+  const { id, data, type } = node;
+
+  const tree: PositionUnawareDecisionTree = {
+    [id]: {
+      id,
+      data: {
+        ...data,
+        children: type === 'BoolNode' ? [data.yesId, data.noId] : data.children || [],
+      },
+      type,
+      hidden: k !== 0,
+      uid: k,
+    } as TreeNode | BoolNodeData,
+  };
+
+  if (type === 'BoolNode') {
+    const [yesId, noId] = [data.yesId, data.noId];
+    const yesIndex = nodes.findIndex((n) => n.id === yesId);
+    const noIndex = nodes.findIndex((n) => n.id === noId);
+
+    if (yesIndex !== -1) {
+      Object.assign(tree, buildTree(nodes, yesIndex));
+    }
+    if (noIndex !== -1) {
+      Object.assign(tree, buildTree(nodes, noIndex));
+    }
+  }
+
+  return tree;
+};
+
+// Usage
 const parseConfig = (config: ConfigFile): PositionUnawareDecisionTree => {
-  const tree: PositionUnawareDecisionTree = {};
-  if (config.nodes === undefined || config.nodes.length === 0) {
+  if (!config.nodes || config.nodes.length === 0) {
     throw new Error('Error Parsing Config');
   }
-  config.nodes.forEach((node, index) => {
-    if (node.type === 'BoolNode') {
-      const { id, data } = node;
-      const boolNodeChildren = [data.yesId, data.noId];
-      tree[id] = {
-        id,
-        data: {
-          ...data,
-          children: boolNodeChildren,
-        } as BoolNodeData,
-        type: node.type,
-        hidden: index !== 0,
-      };
-    } else {
-      const { id, data } = node;
-      tree[id] = {
-        id,
-        data,
-        type: node.type,
-        hidden: index !== 0,
-      } as TreeNode;
-    }
-  });
-  return tree;
+  return buildTree(config.nodes);
 };
 
 /**
