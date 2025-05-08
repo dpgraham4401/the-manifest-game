@@ -59,10 +59,12 @@ const buildTree = (
     const noIndex = nodes.findIndex((n) => n.id === noId);
 
     if (yesIndex !== -1) {
-      Object.assign(tree, buildTree(nodes, yesIndex));
+      console.log(k * 2 + 1);
+      Object.assign(tree, buildTree(nodes, 2 * k + 1));
     }
     if (noIndex !== -1) {
-      Object.assign(tree, buildTree(nodes, noIndex));
+      console.log(k * 2 + 2);
+      Object.assign(tree, buildTree(nodes, 2 * k + 2));
     }
   }
 

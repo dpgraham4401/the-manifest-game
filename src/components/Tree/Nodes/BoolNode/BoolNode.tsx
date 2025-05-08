@@ -15,13 +15,14 @@ export interface BoolNodeData extends VertexData {
 }
 
 export const BoolNode = ({
-  data: { yesId, noId, label, help },
+  data: { yesId, noId, label, help, ...restOfData },
   id,
   ...props
 }: NodeProps<BoolNodeData>) => {
   const { showHelp } = useHelp();
   const { retractDecision, makeDecision } = useDecisionTree();
   const { decisionIsInPath, decision } = useDecisions(id);
+  console.log(restOfData);
 
   const handleHelpClick: MouseEventHandler = (event) => {
     try {
